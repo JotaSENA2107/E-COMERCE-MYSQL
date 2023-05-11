@@ -78,6 +78,7 @@ usuario.put("/usuarios/:id", (req, res) => {
 //verbo delete eliminar
 
 usuario.delete("/usuarios/:id", (req, res) => {
+  console.log(req.params.id)
   let id = req.params.id;
   conex.query("delete from usuario where id = ?", id, (error, respuesta) => {
     if (error) {

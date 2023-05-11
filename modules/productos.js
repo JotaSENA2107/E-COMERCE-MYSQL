@@ -41,7 +41,7 @@ producto.post("/productos", (req, res) => {
     stock: req.body[0].stock,
     calificacion: req.body[0].calificacion,
     estado: req.body[0].estado,
-    fechaCreacion: req.body[0].fechaCreacion
+    fechacreacion: req.body[0].fechacreacion
   }
   conexion.query("INSERT INTO producto SET ?", data, (error, respuesta) => {
     if (error) {
@@ -65,7 +65,7 @@ producto.put("/productos/:id", (req, res) => {
     stock: req.body[0].stock,
     calificacion: req.body[0].calificacion,
     estado: req.body[0].estado,
-    fechaCreacion: req.body[0].fechaCreacion
+    fechacreacion: req.body[0].fechacreacion
   };
   conexion.query(
     "update producto set ? where id = ?",
@@ -81,12 +81,14 @@ producto.put("/productos/:id", (req, res) => {
 });
 
 //VERBO BORRAR
-producto.delete("/productos/:id", (req, res) => {
+producto.delete("/productos/:id=?", (req, res) => {
   let id = req.params.id;
-  console.log(req.params.id);
+  console.log(req)
+  console.log(req.params.id)
+  console.log(req.params);
   conexion.query(
     "DELETE FROM producto WHERE id = ?",
-    parseInt(id),
+   parseFloat(id),
     (error, respuesta) => {
       if (error) {
         console.log(error);
@@ -97,3 +99,4 @@ producto.delete("/productos/:id", (req, res) => {
   );
 });
 module.exports = producto;
+//PARA PODER HACER PUT Y DELETE LA URL ES http://localhost:4100/productos/id EJEMPLO http://localhost:4100/productos/18
