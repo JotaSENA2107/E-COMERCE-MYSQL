@@ -29,13 +29,20 @@ producto.get("/productos", (req, res) => {
 });
 
 //VERBO POST INSERTAR
-/*ruta.post("/api/users", (req, res) => {
+producto.post("/productos", (req, res) => {
   let data = {
-    name: req.body.name,
-    lastname: req.body.lastname,
-    phone: req.body.phone,
+    nombre: req.body.nombre2,
+    descripcion: req.body.descripcion2,
+    imagen: req.body.imagen2,
+    imagenes: req.body.imagenes2,
+    marca: req.body.marca2,
+    precio: req.body.precio2,
+    stock: req.body.stock2,
+    calificacion: req.body.calificacion2,
+    estado: req.body.estado2,
+    fechacreacion: req.body.fechacreacion2,
   };
-  conex.query("INSERT INTO users set ?", data, (error, respuesta) => {
+  conex.query("INSERT INTO producto SET ?", data, (error, respuesta) => {
     if (error) {
       console.log(error);
     } else {
@@ -45,16 +52,40 @@ producto.get("/productos", (req, res) => {
 });
 
 //VERBO PUT ACTUALIZAR
-ruta.put("/api/users/:id", (req, res) => {
+producto.put("/productos/:id", (req, res) => {
   let id = req.params.id;
   let datos = {
-    name: req.body.name,
-    lastname: req.body.lastname,
-    phone: req.body.phone,
+    nombre: req.body.nombre,
+    descripcion: req.body.descripcion,
+    imagen: req.body.imagen,
+    imagenes: req.body.imagenes,
+    marca: req.body.marca,
+    precio: req.body.precio,
+    stock: req.body.stock,
+    calificacion: req.body.calificacion,
+    estado: req.body.estado,
+    fechaCreacion: req.body.fechaCreacion,
   };
   conex.query(
-    "UPDATE users SET ? WHERE id = ?",
+    "update producto set ? where id = ?",
     [datos, id],
+    (error, respuesta) => {
+      if (error) {
+        console.log(`${error}`);
+      } else {
+        res.status(201).send(respuesta);
+      }
+    }
+  );
+});
+
+//VERBO BORRAR
+producto.delete("/productos/:id", (req, res) => {
+  let id = req.params.id;
+  console.log(req.params.id);
+  conex.query(
+    "DELETE FROM producto WHERE id = ?",
+    parseInt(id),
     (error, respuesta) => {
       if (error) {
         console.log(error);
@@ -64,16 +95,4 @@ ruta.put("/api/users/:id", (req, res) => {
     }
   );
 });
-
-//VERBO BORRAR
-ruta.delete("/api/users/:id", (req, res) => {
-  let id = req.params.id;
-  conex.query("DELETE FROM users WHERE id = ?", id, (error, respuesta) => {
-    if (error) {
-      console.log(error);
-    } else {
-      res.status(201).send(respuesta);
-    }
-  });
-});*/
 module.exports = producto;
