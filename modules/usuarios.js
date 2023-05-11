@@ -30,14 +30,14 @@ usuario.get("/usuarios", (req, res) => {
 
 usuario.post("/usuarios", (req, res) => {
   let data = {
-    nombre: req.body.nombre,
-    email: req.body.email,
-    password: req.body.password,
-    direccion: req.body.direccion,
-    ciudad: req.body.ciudad,
-    zonaPostal: req.body.zonaPostal,
-    telefono: req.body.telefono,
-    esAdmin: req.body.esAdmin,
+    nombre: req.body[0].nombre,
+    email: req.body[0].email,
+    password: req.body[0].password,
+    direccion: req.body[0].direccion,
+    ciudad: req.body[0].ciudad,
+    zonaPostal: req.body[0].zonaPostal,
+    telefono: req.body[0].telefono,
+    esAdmin: req.body[0].esAdmin
   };
   conex.query("Insert into usuario set ?", data, (error, respuesta) => {
     if (error) {
@@ -53,14 +53,14 @@ usuario.post("/usuarios", (req, res) => {
 usuario.put("/usuarios/:id", (req, res) => {
   let id = req.params.id;
   let datos = {
-    nombre: req.body.nombre,
-    email: req.body.email,
-    password: req.body.password,
-    direccion: req.body.direccion,
-    ciudad: req.body.ciudad,
-    zonaPostal: req.body.zonaPostal,
-    telefono: req.body.telefono,
-    esAdmin: req.body.esAdmin,
+    nombre: req.body[0].nombre,
+    email: req.body[0].email,
+    password: req.body[0].password,
+    direccion: req.body[0].direccion,
+    ciudad: req.body[0].ciudad,
+    zonaPostal: req.body[0].zonaPostal,
+    telefono: req.body[0].telefono,
+    esAdmin: req.body[0].esAdmin
   };
   conex.query(
     "update usuario set ? where id = ?",

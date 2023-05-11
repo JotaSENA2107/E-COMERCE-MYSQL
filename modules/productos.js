@@ -8,7 +8,7 @@
 const express = require("express");
 const cors = require("cors"); //para evitar restricciones entre llamadas de sitios
 const producto = express.Router(); //trae el metodo router de express para hacer los endpoint  http://www.misitio.com/api/clietes
-const conex = require("./bdatos");
+const conexion = require("./bdatos");
 
 //construimos la capa intermedia de la aplicacion MIDDLEWARD
 producto.use(express.json());
@@ -19,7 +19,7 @@ producto.options("*", cors()); //configura las ip permitidas
 
 //VERBO GET LISTAR
 producto.get("/productos", (req, res) => {
-  conex.query("SELECT * FROM producto", (error, respuesta) => {
+  conexion.query("SELECT * FROM producto", (error, respuesta) => {
     if (error) {
       throw error;
     } else {
@@ -30,19 +30,20 @@ producto.get("/productos", (req, res) => {
 
 //VERBO POST INSERTAR
 producto.post("/productos", (req, res) => {
+  console.log(req)
   let data = {
-    nombre: req.body.nombre2,
-    descripcion: req.body.descripcion2,
-    imagen: req.body.imagen2,
-    imagenes: req.body.imagenes2,
-    marca: req.body.marca2,
-    precio: req.body.precio2,
-    stock: req.body.stock2,
-    calificacion: req.body.calificacion2,
-    estado: req.body.estado2,
-    fechacreacion: req.body.fechacreacion2,
-  };
-  conex.query("INSERT INTO producto SET ?", data, (error, respuesta) => {
+    nombre: req.body[0].nombre,
+    descripcion: req.body[0].descripcion,
+    imagen: req.body[0].imagen,
+    imagenes: req.body[0].imagenes,
+    marca: req.body[0].marca,
+    precio: req.body[0].precio,
+    stock: req.body[0].stock,
+    calificacion: req.body[0].calificacion,
+    estado: req.body[0].estado,
+    fechaCreacion: req.body[0].fechaCreacion
+  }
+  conexion.query("INSERT INTO producto SET ?", data, (error, respuesta) => {
     if (error) {
       console.log(error);
     } else {
@@ -55,18 +56,18 @@ producto.post("/productos", (req, res) => {
 producto.put("/productos/:id", (req, res) => {
   let id = req.params.id;
   let datos = {
-    nombre: req.body.nombre,
-    descripcion: req.body.descripcion,
-    imagen: req.body.imagen,
-    imagenes: req.body.imagenes,
-    marca: req.body.marca,
-    precio: req.body.precio,
-    stock: req.body.stock,
-    calificacion: req.body.calificacion,
-    estado: req.body.estado,
-    fechaCreacion: req.body.fechaCreacion,
+    nombre: req.body[0].nombre,
+    descripcion: req.body[0].descripcion,
+    imagen: req.body[0].imagen,
+    imagenes: req.body[0].imagenes,
+    marca: req.body[0].marca,
+    precio: req.body[0].precio,
+    stock: req.body[0].stock,
+    calificacion: req.body[0].calificacion,
+    estado: req.body[0].estado,
+    fechaCreacion: req.body[0].fechaCreacion
   };
-  conex.query(
+  conexion.query(
     "update producto set ? where id = ?",
     [datos, id],
     (error, respuesta) => {
@@ -83,7 +84,7 @@ producto.put("/productos/:id", (req, res) => {
 producto.delete("/productos/:id", (req, res) => {
   let id = req.params.id;
   console.log(req.params.id);
-  conex.query(
+  conexion.query(
     "DELETE FROM producto WHERE id = ?",
     parseInt(id),
     (error, respuesta) => {
